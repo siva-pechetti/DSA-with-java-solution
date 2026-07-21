@@ -1,8 +1,8 @@
-package ArraysProblems;
+package Leetcode;
 
 import java.util.Scanner;
 
-public class twoSum {
+public class TwoSum {
 
     public static void twoSum1(int[] nums, int target) {
         for (int i = 0; i < nums.length; i++) {
