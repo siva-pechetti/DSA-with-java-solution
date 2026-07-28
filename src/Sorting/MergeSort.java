@@ -22,7 +22,6 @@ public class MergeSort {
 
         ArrayList<Integer> temp = new ArrayList<>();
 
-        // Merge two sorted halves
         while (left <= mid && right <= high) {
             if (a[left] <= a[right]) {
                 temp.add(a[left]);
@@ -33,19 +32,16 @@ public class MergeSort {
             }
         }
 
-        // Copy remaining elements from left half
         while (left <= mid) {
             temp.add(a[left]);
             left++;
         }
 
-        // Copy remaining elements from right half
         while (right <= high) {
             temp.add(a[right]);
             right++;
         }
 
-        // Copy back to original array
         for (int i = low; i <= high; i++) {
             a[i] = temp.get(i - low);
         }
