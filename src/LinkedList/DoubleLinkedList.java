@@ -2,91 +2,101 @@ package LinkedList;
 
 import java.util.Scanner;
 
-class Node {
+class Node1 {
     int data;
-    Node next;
+    Node1 next;
+    Node1 prev;
 
-    Node(int data) {
+    Node1(int data) {
         this.data = data;
         this.next = null;
+        this.prev = null;
     }
 }
 
-public class SingleLinkedList {
+public class DoubleLinkedList {
+    Node1 head;
+    void insertAtBeginning(int data){
 
-    Node head;
-
-    void insertAtBeginning(int data) {
-        Node newNode = new Node(data);
-
-        if (head == null) {
-            head = newNode;
-        } else {
-            newNode.next = head;
-            head = newNode;
+        Node1 newNode = new Node1(data);
+        if(head  == null){
+            head=newNode;
+        }
+        else{
+            head.prev=newNode;
+            newNode.next=head;
+            head=newNode;
         }
     }
+    void insertEnd(int data){
 
-    void insertEnd(int data) {
-        Node newNode = new Node(data);
-
+        Node1 newNode = new Node1(data);
         if (head == null) {
             head = newNode;
             return;
         }
-
-        Node temp = head;
-
-        while (temp.next != null) {
-            temp = temp.next;
+        Node1 tail=head;
+        while (tail.next != null) {
+            tail = tail.next;
         }
+        tail.next=newNode;
+        newNode.prev=tail;
+        tail=newNode;
 
-        temp.next = newNode;
     }
-
     void insertAtPosition(int pos, int data) {
         if (pos <= 0) {
             System.out.println("Invalid position");
             return;
         }
-
-        Node newNode = new Node(data);
-
+        Node1 newNode = new Node1(data);
         if (pos == 1) {
             newNode.next = head;
             head = newNode;
             return;
         }
-
-        Node temp = head;
-
-        for (int i = 1; i < pos - 1; i++) {
+        Node1 temp = head;
+        for (int i = 1; i < pos-1; i++) {
             if (temp == null) {
                 System.out.println("Invalid position");
                 return;
             }
-
             temp = temp.next;
         }
-
         if (temp == null) {
             System.out.println("Invalid position");
             return;
         }
-
-        newNode.next = temp.next;
-        temp.next = newNode;
+        newNode.prev=temp;
+        newNode.next=temp.next;
+        temp.next=newNode;
+        newNode.next.prev=newNode;
     }
 
-    void deleteAtBeginning() {
+    void display() {
         if (head == null) {
             System.out.println("List is Empty.");
             return;
         }
 
-        head = head.next;
+        Node1 temp = head;
+
+        while (temp != null) {
+            System.out.print(temp.data + "->");
+            temp = temp.next;
+        }
+
+        System.out.println("null");
     }
 
+    void deleteAtBeginning(){
+        if (head == null) {
+            System.out.println("List is Empty.");
+            return;
+        }
+        head=head.next;
+        head.prev=null;
+    }
     void deleteAtEnd() {
         if (head == null) {
             System.out.println("List is Empty.");
@@ -98,7 +108,7 @@ public class SingleLinkedList {
             return;
         }
 
-        Node temp = head;
+        Node1 temp = head;
 
         while (temp.next.next != null) {
             temp = temp.next;
@@ -106,8 +116,8 @@ public class SingleLinkedList {
 
         temp.next = null;
     }
-
     void deleteAtPosition(int pos) {
+        Node1 nextNode;
         if (head == null) {
             System.out.println("List is Empty.");
             return;
@@ -121,7 +131,7 @@ public class SingleLinkedList {
             return;
         }
 
-        Node temp = head;
+        Node1 temp = head;
         for (int i = 1; i < pos - 1; i++) {
             if (temp == null || temp.next == null) {
                 System.out.println("Invalid position");
@@ -134,28 +144,15 @@ public class SingleLinkedList {
             System.out.println("Invalid position");
             return;
         }
-        temp.next = temp.next.next;
-    }
+        nextNode=temp.next;
+        temp.next=nextNode.next;
+        nextNode.next.prev=nextNode.prev;
 
-    void display() {
-        if (head == null) {
-            System.out.println("List is Empty.");
-            return;
-        }
-
-        Node temp = head;
-
-        while (temp != null) {
-            System.out.print(temp.data + "->");
-            temp = temp.next;
-        }
-
-        System.out.println("null");
     }
 
     public static void main(String[] args) {
 
-        SingleLinkedList list = new SingleLinkedList();
+        DoubleLinkedList list = new DoubleLinkedList();
 
         Scanner sc = new Scanner(System.in);
 
@@ -230,4 +227,5 @@ public class SingleLinkedList {
 
         sc.close();
     }
+
 }
