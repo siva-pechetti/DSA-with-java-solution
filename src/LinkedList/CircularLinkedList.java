@@ -2,39 +2,56 @@ package LinkedList;
 
 import java.util.Scanner;
 
-
 public class CircularLinkedList {
 
-    public static Node createList(int n, Scanner sc) {
+    Node head;
 
-        Node head = null;
-        Node tail = null;
+    void insertAtBeginning(int data) {
 
-        for (int i = 0; i < n; i++) {
+        Node newNode = new Node(data);
 
-            int value = sc.nextInt();
-
-            Node newNode = new Node(value);
-
-            if (tail == null) {
-                head = newNode;
-                tail = newNode;
-
-                tail.next = head;
-            }
-            else {
-                newNode.next = head;
-
-                tail.next = newNode;
-
-                tail = newNode;
-            }
+        if (head == null) {
+            head = newNode;
+            newNode.next = head;
+            return;
         }
 
-        return head;
+        Node temp = head;
+
+        while (temp.next != head) {
+            temp = temp.next;
+        }
+
+        newNode.next = head;
+
+        temp.next = newNode;
+
+        head = newNode;
     }
 
-    public static void display(Node head) {
+    void insertAtEnd(int data) {
+
+        Node newNode = new Node(data);
+
+        if (head == null) {
+            head = newNode;
+            newNode.next = head;
+            return;
+        }
+
+        Node temp = head;
+
+        while (temp.next != head) {
+            temp = temp.next;
+        }
+
+        temp.next = newNode;
+        newNode.next = head;
+    }
+
+
+
+    void display() {
 
         if (head == null) {
             System.out.println("List is empty");
@@ -52,17 +69,30 @@ public class CircularLinkedList {
     }
 
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
+
+        CircularLinkedList list = new CircularLinkedList();
 
         System.out.print("Enter number of nodes: ");
         int n = sc.nextInt();
 
-        Node head = createList(n, sc);
+        System.out.println("Enter values:");
+
+        for (int i = 0; i < n; i++) {
+            int value = sc.nextInt();
+            list.insertAtEnd(value);
+        }
+
         System.out.println("Original list:");
-        display(head);
+        list.display();
 
+        list.insertAtBeginning(45);
 
+        System.out.println("After inserting 45 at beginning:");
+        list.display();
 
-
+        sc.close();
     }
+
 }
