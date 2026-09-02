@@ -1,8 +1,9 @@
-package Leetcode;
+package LinkedList;
 
 import java.util.Scanner;
 
 public class SortedLinkedList {
+
 
 
     static class Node {
