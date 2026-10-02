@@ -1,0 +1,38 @@
+package Leetcode_Stack_Queues;
+
+import java.util.Stack;
+
+public class LargestRectangleInHistogram {
+
+    public int largestRectangleArea(int[] heights) {
+        Stack<Integer> st = new Stack<>();
+        int maxArea = 0;
+
+        for (int i = 0; i <= heights.length; i++) {
+
+            int currentHeight = (i == heights.length) ? 0 : heights[i];
+
+            while (!st.isEmpty() && currentHeight < heights[st.peek()]) {
+
+                int height = heights[st.pop()];
+
+                int width;
+
+                if (st.isEmpty()) {
+                    width = i;
+                } else {
+                    width = i - st.peek() - 1;
+                }
+
+                int area = height * width;
+
+                maxArea = Math.max(maxArea, area);
+            }
+
+            st.push(i);
+        }
+
+        return maxArea;
+    }
+
+}
